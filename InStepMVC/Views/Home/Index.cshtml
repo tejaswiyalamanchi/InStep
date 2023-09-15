@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - InStep</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/InStepMVC.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div style="position: relative;">
+                <a class="navbar-brand" style="margin-left: 900px;" asp-area="" asp-controller="Register" asp-action="IndexViewData">Apply now</a>
+                <a class="navbar-brand" style="right: 0px;" asp-area="" asp-controller="Claims" asp-action="Index">Claim</a>
+            </div>
+        </nav>
+    </header>
+
+    <div>
+        <h1 class="display-4">InStep, an internship like no other</h1>
+        <p>Take up a fulfilling project. Practice yoga. Learn from executive leadership. Build a Global Network. Participate in a hackathon. Welcome to an internship where you have the best of both worlds.</p>
+        <p>What is it that separates InStep from all the other internships in the world?</p>
+        <p>Well, let’s see what InStep offers to its interns that makes all the interns feel so special:</p>
+        <ul>
+            <li>Some say, it is the power to choose their own project and work on something they are passionate about…</li>
+            <li>Some say, it is the opportunity to network with incredible minds around the world and have candid conversations with Infosys leaders…</li>
+            <li>Some say, it is the attention and care showered on them by the whole Infosys family – the warmth, the diversity, the inclusivity, and the love…</li>
+            <li>However, what everyone says is that InStep gives them the best summer of their lives…</li>
+            <li>Making BFFs out of complete strangers, bonding over adversities, growing with learnings, succeeding at challenges and most importantly, loving beyond the norms of every border on the map!</li>
+        </ul>
+    </div>
+</body>
+

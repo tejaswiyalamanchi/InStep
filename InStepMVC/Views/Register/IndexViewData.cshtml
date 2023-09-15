@@ -1,0 +1,234 @@
+﻿@model InStepMVC.Models.RegisterModel
+
+@{
+    ViewData["Title"] = "Application Form";
+}
+<style>
+    .flex-parent {
+        display: flex;
+    }
+
+    .flex-child {
+        flex: 1;
+    }
+
+    .flex-child1 {
+        flex: 1;
+        margin-left: 20px;
+    }
+
+    th,td{
+        border: 1px solid black;
+        text-align:center;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    select{
+        -webkit-appearance: listbox !important;
+    }
+
+    .required:after {
+        content: " *";
+        color: red;
+    }
+</style>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - InStep</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/InStepMVC.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <h1>Internship Application Form</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-9">
+            <form asp-action="RegisterCandidate" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="flex-parent">
+                    <div class="form-group flex-child">
+                        <label asp-for="candidate.FirstName" class="control-label required">First name</label>
+                        <input asp-for="candidate.FirstName" class="form-control" />
+                        <span asp-validation-for="candidate.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group flex-child1">
+                        <label asp-for="candidate.LastName" class="control-label required">Last name</label>
+                        <input asp-for="candidate.LastName" class="form-control" />
+                        <span asp-validation-for="candidate.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="flex-parent">
+                    <div class="form-group flex-child">
+                        <label asp-for="candidate.EmailId" class="control-label required">Email ID</label>
+                        <input asp-for="candidate.EmailId" class="form-control" type="text" />
+                        <span asp-validation-for="candidate.EmailId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group flex-child1">
+                        <label asp-for="candidate.MobileNumber" class="control-label required">Mobile Number</label>
+                        <input asp-for="candidate.MobileNumber" type="text" class="form-control" title="Please enter valid phone number" />
+                        <span asp-validation-for="candidate.MobileNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label asp-for="candidate.UniversityName" class="control-label required">College name</label>
+                    <input asp-for="candidate.UniversityName" class="form-control" />
+                    <span asp-validation-for="candidate.UniversityName" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="flex-parent">
+                    <div class="form-group flex-child">
+                        <label asp-for="candidate.Degree" class="control-label required">Degree</label>
+                        <!-- <input asp-for="candidate.Degree" class="form-control" /> -->
+                        <select asp-for="candidate.Degree" class="form-control" id="degree" onChange="changedegree(this.value);">
+                            <option value="" disabled selected>Select</option>
+                            <option value="Bachelors">Bachelors</option>
+                            <option value="Masters">Masters</option>
+                            <option value="PhD">PhD</option>
+                        </select>
+                        <span asp-validation-for="candidate.Degree" class="text-danger"></span>
+                    </div>
+                    <div class="form-group flex-child1">
+                        <label asp-for="candidate.AcademicYear" class="control-label required">Current Year</label>
+                        <!--<input asp-for="candidate.Academicyear" class="form-control" /> -->
+                        <select asp-for="candidate.AcademicYear" class="form-control" id="year">
+                            <option value="" disabled selected>Select</option>
+                        </select>
+                        <span asp-validation-for="candidate.AcademicYear" class="text-danger"></span>
+                    </div>
+                    <div class="form-group flex-child1">
+                        <label asp-for="candidate.Course" class="control-label required">Course</label>
+                        <input asp-for="candidate.Course" class="form-control" />
+                        <span asp-validation-for="candidate.Course" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="flex-parent">
+                    <div class="form-group flex-child">
+                        <label asp-for="candidate.Cgpa" class="control-label required">CGPA</label>
+                        <input asp-for="candidate.Cgpa" class="form-control" />
+                        <span asp-validation-for="candidate.Cgpa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group flex-child1">
+                        <label asp-for="candidate.Skills" class="control-label required"></label>
+                        <input asp-for="candidate.Skills" class="form-control" />
+                        <span asp-validation-for="candidate.Skills" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <label asp-for="candidate.AvailableStart" class="control-label required">When will you be able to start internship</label>
+                    <input asp-for="candidate.AvailableStart" class="form-control" type="date" value="dd-mm-yyyy" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="candidate.AvailableStart" class="text-danger"></span>
+                </div>
+                <br />
+
+
+                <div> <h6 class="required">Select Projects you want to apply for(select atleast 1)</h6></div>
+                <div style="height: 150px; overflow: auto;">
+                    <table style ="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="border: 1px solid ;text-align:center;">Select project</th>
+                                <th style="border:1px solid ;text-align:center;">Project Name</th>
+                                <th style="border:1px solid ;text-align:center;">Tecnology</th>
+                                <th style="border:1px solid ;text-align:center;">Duration(in weeks)</th>
+                                <th style="border:1px solid ;text-align:center;">Project Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ProjectDetail project in Model.projectDetails)
+                            {
+                                <tr style="height: 50px; overflow: auto; border:1px solid">
+                                    <td border:1px solid>
+                                        <label>
+                                            <input type="checkbox"
+                                                   name="projects"
+                                                   value="@project.ProjectCode" />
+                                        </label>
+                                    </td>
+                                    <td style="border:1px solid">@project.ProjectName</td>
+                                    <td style="border:1px solid">@project.TechnologyName</td>
+                                    <td style="border:1px solid">@project.Duration</td>
+                                    <td style="border:1px solid">@project.Details</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <br />
+                <br />
+
+                <div>
+                    <label asp-for="candidate.Resume" class="control-label required">Upload Resume</label>
+                    <input type="file" asp-for="candidate.Resume" class="form-control flex-child" required />
+                </div>
+
+
+                <br />
+                <div class="form-group">
+                    <input type="submit" style="margin-left:450px" value="Submit" class="btn btn-primary" />
+                </div>
+                <b>@ViewBag.message</b>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        <script type="text/javascript">
+            var years = {
+                Bachelors: [1, 2, 3, 4],
+                Masters: [1, 2],
+                PhD: [1, 2, 3, 4]
+            }
+            var suffix = ["st", "nd", "rd", "th"]
+
+            function changedegree(value) {
+                if (value.length == 0) document.getElementById("year").innerHTML = "<option></option>";
+                else {
+                    var yearOptions = "";
+                    for (let i = 0; i < years[value].length; i++) {
+                        yearOptions += "<option value=" + years[value][i] + ">" + years[value][i] + suffix[i] + " year</option>";
+                    }
+                    document.getElementById("year").innerHTML = yearOptions;
+                }
+            }
+
+
+            $(function () {
+                $("input[type='checkBox']").change(function () {
+                    var len = $("input[type='checkBox']:checked").length;
+                    if (len == 0)
+                        $("input[type='submit']").prop("disabled", true);
+                    else
+                        $("input[type='submit']").removeAttr("disabled");
+                });
+                $("input[type='checkBox']").trigger('change');
+            });
+
+            let stateObject = {
+                object: "blah"
+            }
+
+            history.pushState(stateObject, "", "../Home/Index")
+        </script>
+    }
+</body>
+ 

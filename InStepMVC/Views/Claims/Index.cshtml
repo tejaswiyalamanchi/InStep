@@ -1,0 +1,112 @@
+﻿@model InStepMVC.Models.Claim
+
+@{
+    ViewData["Title"] = "Claim";
+}
+<style>
+    .flex-parent {
+        display: flex;
+    }
+
+    .flex-child {
+        flex: 1;
+    }
+
+    .flex-child1 {
+        flex: 1;
+        margin-left: 20px;
+    }
+
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    select {
+        -webkit-appearance: listbox !important;
+    }
+
+    .required:after {
+        content: " *";
+        color: red;
+    }
+</style>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - InStep</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/InStepMVC.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <h1>Claim Form</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-9">
+            <form asp-action="RaiseClaim" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="flex-parent">
+                    <div class="form-group flex-child">
+                        <label asp-for="ClaimType" class="control-label required">Claim Type</label>
+                        <select asp-for="ClaimType" class="form-control">
+                            <option value="" disabled selected>Select</option>
+                            <option value="Visa">Visa Claim</option>
+                            <option value="Transport">Transport Claim</option>
+                        </select>
+                        <span asp-validation-for="ClaimType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group flex-child1">
+                        <label asp-for="ClaimName" class="control-label required">Claim name</label>
+                        <input asp-for="ClaimName" class="form-control" />
+                        <span asp-validation-for="ClaimName" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="flex-parent">
+                    <div class="form-group flex-child">
+                        <label asp-for="InternId" class="control-label required">Intern ID</label>
+                        <input asp-for="InternId" class="form-control" />
+                        <span asp-validation-for="InternId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group flex-child1">
+                        <label asp-for="Amount" class="control-label required">Amount</label>
+                        <input asp-for="Amount" class="form-control" type="number" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+
+                <div>
+                    <label asp-for="ProofDocument" class="control-label required">Upload Document</label>
+                    <input type="file" asp-for="ProofDocument" class="form-control flex-child" required />
+                </div>
+
+
+                <br />
+                <div class="form-group">
+                    <input type="submit" style="margin-left:450px" value="Submit" class="btn btn-primary" />
+                </div>
+                <b>@ViewBag.message</b>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        <script type="text/javascript">
+            let stateObject = {
+                object: "blah"
+            }
+
+            history.pushState(stateObject, "", "../Home/Index")
+        </script>
+    }
+</body>
